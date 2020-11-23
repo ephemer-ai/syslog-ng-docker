@@ -1,7 +1,6 @@
 FROM debian:stretch
 LABEL maintainer="Andras Mitzki <andras.mitzki@balabit.com>"
 
-
 RUN apt-get update -qq && apt-get install -y \
     wget \
     gnupg2
@@ -23,7 +22,7 @@ EXPOSE 6514/tcp
 
 HEALTHCHECK --interval=2m --timeout=3s --start-period=30s CMD /usr/sbin/syslog-ng-ctl stats || exit 1
 
-
-
+COPY ./clientkey.pem /etc/syslog-ng/clientkey.pem
+COPY ./clientreq.pem /etc/syslog-ng/clientreq.pem
 
 ENTRYPOINT ["/usr/sbin/syslog-ng", "-F"]
